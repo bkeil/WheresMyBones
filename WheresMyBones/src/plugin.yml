@@ -1,0 +1,7 @@
+name: WheresMyBones
+main: com.mouthpunch.wheresmybones.WheresMyBones
+version: 0.0.1
+commands:
+    mybones:
+        description: Gives the locations of your last few deaths
+        usage: /mybones
