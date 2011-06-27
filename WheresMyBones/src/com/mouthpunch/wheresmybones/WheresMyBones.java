@@ -16,7 +16,7 @@ public class WheresMyBones extends JavaPlugin {
 	
 	private final Map<String, Locations> store = new HashMap<String, Locations>(); 
 
-	public Locations getLocations(String playerName) {
+	public Locations loadBonesLocations(String playerName) {
 		return getLocationsInternal(playerName);
 	}
 

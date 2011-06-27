@@ -25,7 +25,7 @@ public class MyBonesCommand implements CommandExecutor {
 
 		final Player player = (Player) sender;
 
-		Iterator<Location> i = plugin.getLocations(player.getName()).iterator();
+		Iterator<Location> i = plugin.loadBonesLocations(player.getName()).iterator();
 
 		if (i.hasNext()) {
 			int j = 1;
