@@ -31,6 +31,11 @@ public class MyBonesCommand implements CommandExecutor {
 		Iterator<Location> i = plugin.loadBonesLocations(player.getName())
 				.iterator();
 
+		if (!i.hasNext()) {
+			sender.sendMessage("Your bones are lost.");
+			return true;
+		}
+
 		if (args.length == 0) {
 			listBones(player, i);
 			return true;
@@ -40,17 +45,18 @@ public class MyBonesCommand implements CommandExecutor {
 	}
 
 	private void listBones(Player sender, Iterator<Location> i) {
-		if (i.hasNext()) {
-			int j = 1;
-			sender.sendMessage("Your bones:");
-			while (i.hasNext()) {
-				final Location l = i.next();
-				sender.sendMessage((j++) + ". " + " (" + l.getBlockX() + ", "
-						+ l.getBlockY() + ", " + l.getBlockZ() + ") in "
-						+ l.getWorld().getName());
-			}
-		} else {
-			sender.sendMessage("Your bones are lost.");
+		if (!plugin.checkPermission(sender, "com.mouthpunch.bones.list")) {
+			sender.sendMessage("You don't have permission to list bones.");
+			return;
+		}
+
+		int j = 1;
+		sender.sendMessage("Your bones:");
+		while (i.hasNext()) {
+			final Location l = i.next();
+			sender.sendMessage((j++) + ". " + " (" + l.getBlockX() + ", "
+					+ l.getBlockY() + ", " + l.getBlockZ() + ") in "
+					+ l.getWorld().getName());
 		}
 	}
 
@@ -83,11 +89,29 @@ public class MyBonesCommand implements CommandExecutor {
 
 		loc = loc.clone();
 
-		List<String> argsList = Arrays.asList(args);
-		player.sendMessage(args.toString());
+		final List<String> argsList = Arrays.asList(args);
+		final boolean tracking;
 
 		if (argsList.indexOf("compass") != -1) {
-			player.setCompassTarget(loc);
+			if (plugin.checkPermission(player, "com.mouthpunch.bones.track")) {
+				player.setCompassTarget(loc);
+				player.sendMessage("Your compass will lead the way to your"
+						+ " bones.");
+				tracking = true;
+			} else {
+				player.sendMessage("You don't have permission to track bones.");
+				tracking = true;
+			}
+		} else {
+			tracking = false;
+		}
+
+		if (!plugin.checkPermission(player, "com.mouthpunch.bones.orient")) {
+			if (!tracking) {
+				player.sendMessage("You don't have permission to orient"
+						+ " yourself towards bones.");
+			}
+			return true;
 		}
 
 		final Vector n = loc.subtract(player.getEyeLocation()).toVector()
