@@ -4,4 +4,4 @@ version: 0.0.2
 commands:
     mybones:
         description: Gives the locations of your last few deaths
-        usage: /mybones
+        usage: /mybones [<bone number> [compass]]
