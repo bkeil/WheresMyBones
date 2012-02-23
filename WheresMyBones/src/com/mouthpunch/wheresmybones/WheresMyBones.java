@@ -5,19 +5,14 @@ import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.nijiko.permissions.PermissionHandler;
 import com.nijikokun.bukkit.Permissions.Permissions;
 
 public class WheresMyBones extends JavaPlugin {
-	private final WheresMyBonesEntityListener entityListener = new WheresMyBonesEntityListener(
-			this);
 
 	private volatile PermissionHandler permissionHandler;
 
@@ -37,10 +32,8 @@ public class WheresMyBones extends JavaPlugin {
 	}
 
 	public void onEnable() {
-		final PluginManager pm = getServer().getPluginManager();
-
-		pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener,
-				Priority.Monitor, this);
+		
+		new WheresMyBonesEntityListener(this);
 
 		getCommand("mybones").setExecutor(new MyBonesCommand(this));
 

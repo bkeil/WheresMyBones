@@ -2,18 +2,21 @@ package com.mouthpunch.wheresmybones;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
 
-public class WheresMyBonesEntityListener extends EntityListener {
+public class WheresMyBonesEntityListener implements Listener {
 
 	private final WheresMyBones plugin;
 
 	public WheresMyBonesEntityListener(WheresMyBones plugin) {
 		this.plugin = plugin;
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
-	@Override
+	@EventHandler(priority=EventPriority.MONITOR)
 	public void onEntityDeath(EntityDeathEvent event) {
 		final Entity entity = event.getEntity();
 		if (entity instanceof Player) {
