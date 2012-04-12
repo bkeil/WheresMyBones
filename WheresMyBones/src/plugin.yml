@@ -1,6 +1,6 @@
 name: WheresMyBones
 main: com.mouthpunch.wheresmybones.WheresMyBones
-version: 1.2.4.0
+version: 1.2.5.0
 commands:
     mybones:
         description: Gives the locations of your last few deaths

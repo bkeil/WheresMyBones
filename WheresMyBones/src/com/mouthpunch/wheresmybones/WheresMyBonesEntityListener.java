@@ -16,12 +16,15 @@ public class WheresMyBonesEntityListener implements Listener {
 		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
-	@EventHandler(priority=EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onEntityDeath(EntityDeathEvent event) {
 		final Entity entity = event.getEntity();
 		if (entity instanceof Player) {
-			plugin.storeBonesLocation(((Player) entity).getName(),
-					entity.getLocation());
+			final Player player = (Player) entity;
+			if (plugin.isNotifyingAvailability()) {
+				player.sendMessage(plugin.getAvailibilityNotification());
+			}
+			plugin.storeBonesLocation(player.getName(), entity.getLocation());
 		}
 	}
 }
